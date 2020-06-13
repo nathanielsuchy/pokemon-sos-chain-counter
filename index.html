@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pokemon - SOS Chain Counter</title>
+  <link rel="stylesheet" type="text/css" href="https:////maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https:////maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="global.css" />
+  <script src="global.js"></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="jumbotron">
+      <h2 class="text-center">Pokemon - SOS Chain Counter</h2>
+      <noscript><strong>Javascript is required for this application to run. Please enable Javascript to use this application.</strong></noscript>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-4">
+          <h4 class="text-center">Controls</h4>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-primary" id="turnminus">-</button> &nbsp;&nbsp;Turn <span id="turn">0</span>&nbsp; <button type="button" class="btn btn-primary" id="turnplus">+</button>
+            &nbsp;&nbsp;
+          <button type="button" class="btn btn-primary" id="helperminus">-</button> Helper <span id="helper">0</span> <button type="button" class="btn btn-primary" id="helperplus">+</button>
+          <br /><br />
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="btn btn-danger" id="resetcounter">Reset Counter</button>
+          <br /><br />
+          <i>I get that using this tool while playing can be difficult I've tried to make it easier, press the letter "t" to increase the turn counter, press the letter "h" to increase the helper counter.</i>
+        </div>
+        <div class="col-sm-4">
+          <h4 class="text-center">Results</h4>
+          <i>Odds of a Shiny Pokemon:</i> <span id="shinychance">1</span> Roll.
+          <br />
+          <i>Odds of Pokemon with Hidden Ability:</i> <span id="hiddenabilitychance">0</span>%.
+          <br />
+          <i>Odds of Pokemon with Perfect IVs:</i> <span id="perfectivchance">0</span> guaranteed perfect IVs
+          <br /><br />
+          It is currently turn number <span id="turnnum">0</span> it's recommended to attack the <i id="whichpokemon">right</i> pokemon (this updates based on turn number) and switch every 30 turns to avoid the Pokemon fainting from struggle and breaking your chain.
+        </div>
+        <div class="col-sm-4">
+          <h4 class="text-center">How To Use</h4>
+          Using this tool is simple, just press the plus/minus button on each counter as the turn or amount of called Pokemon change.
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row">
+        <div class="col-sm-4">
+          <h4 class="text-center">About This Tool</h4>
+          This tool was written to assist Pokemon Sun and Moon Players with "SOS Chaining" who wish to collect Shiny Pokemon, Perfect IV Pokemon, and Pokemon with a Hidden Ability. This tool is made with information adapted from <a href="https://www.reddit.com/r/pokemon/comments/5hmd9h/spoiler_some_more_indepth_mechanics_on_sos_battle/">this reddit thread</a> (most written notes are copied and pasted from the thread so the thread gets credit for notes on this app). I've also been asked to credit <a href="https://gbatemp.net/threads/is-anybody-researching-sun-moon-shiny-chaining.450904/">this GBATemp Thread</a>.
+        </div>
+        <div class="col-sm-4">
+          <h4 class="text-center">Technical Notes</h4>
+          <ul>
+            <li>
+              The game uses an 8-bit counter to count chain length, so it only goes up to a maximum of 0xFF (255), after which it rolls over to 0 again. What this means is that it is possible to chain up to 280, for example, and only catch a Pokemon with 3 perfect IVs.
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <h4 class="text-center">Other Notes</h4>
+          <ul>
+            <li>
+              Assuming the Masuda method in this game is the same as in Gen VI, using it with a shiny charm yields a shiny chance of 8/4096 (five extra rolls from MM and two extra from charm), or a 1/512 chance per egg. Make of that what you will.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4">
+          <h4 class="text-center">Shiny Odds</h4>
+          <ul>
+            <li>
+              Chain length of 0 to 69 - Presumably, one and two extra rolls are added somewhere in between a chain of 1 and 69, but it's not yet known exactly where in the chain this happens.
+            </li>
+            <li>
+              Chain length of 70 to 255 - Three extra rolls for a shiny spawn. After a chain of 70 the game rolls the shiny chance an extra three times, meaning the normal chance of 1/4096 gets increased to 4/4096, effectively giving a chance of 1/1024. With a shiny charm, this chance is originally 3/4096 (two extra rolls for shiny spawn), and so gets boosted to 6/4096 after a chain of 70, effectively giving about a 1/683 chance of a shiny until the chain counter rolls over to 0.
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <h4 class="text-center">Hidden Ability Odds</h4>
+          <ul>
+            <li>
+              Chain length of 0 to 9 - 0% chance of Hidden Ability
+            </li>
+            <li>
+              Chain length of 10 to 19 - 5% chance of Hidden Ability
+            </li>
+            <li>
+              Chain length of 20 to 29 - 10% chance of Hidden Ability
+            </li>
+            <li>
+              Chain length of 30 to 255* - 15% chance of Hidden Ability
+            </li>
+          </ul>
+        </div>
+        <div class="col-sm-4">
+          <h4 class="text-center">Perfect IVs Odds</h4>
+          <ul>
+            <li>
+              Chain length 0 to 4 - No guaranteed perfect IVs
+            </li>
+            <li>
+              Chain length of 5 to 9 - 1 guaranteed perfect IV
+            </li>
+            <li>
+              Chain length of 10 to 19 - 2 guaranteed perfect IVs
+            </li>
+            <li>
+              Chain length of 20 to 29 - 3 guaranteed perfect IVs
+            </li>
+            <li>
+              Chain length of 30 to 255 - 4 guaranteed perfect IVs
+            </li>
+          </ul>
+        </div>
+    </div>
+
+    <hr />
+
+    <i class="text-center">Project Designed by Nathaniel Suchy. Like this project? <a href="https://github.com/nsuchy/Pokemon-SOS-Chain-Counter/">Fork It on GitHub</a> | <a href="https://github.com/nsuchy/Pokemon-SOS-Chain-Counter/issues">Report A Bug</a></i> | Commit <a href="https://github.com/nsuchy/Pokemon-SOS-Chain-Counter/commit/718d69753ee0364805aa309a25f25ef16b389d78">718d697</a>
+    </div>
+  </div>
+</body>
+</html>
